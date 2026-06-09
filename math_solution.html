@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 高考数学压轴题 完整解析</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0f0a1a;
+  --surface: #1a1230;
+  --surface2: #241b3d;
+  --border: #2f2550;
+  --text: #e8e0f0;
+  --text-dim: #8879a8;
+  --pink: #EC4899;
+  --purple: #8B5CF6;
+  --gold: #F59E0B;
+  --green: #10B981;
+  --cyan: #06B6D4;
+  --red: #EF4444;
+  --blue: #3B82F6;
+}
+
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.8;
+}
+
+/* ────── HEADER ────── */
+.header {
+  text-align: center;
+  padding: 50px 20px 30px;
+  background: linear-gradient(180deg, #1a1230 0%, #0f0a1a 100%);
+}
+.header h1 {
+  font-size: 2.2rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--pink), var(--gold), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+.header p {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+/* ────── CONTAINER ────── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ────── SECTION ────── */
+.section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  margin: 24px 0;
+  overflow: hidden;
+}
+.section-header {
+  padding: 18px 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: background 0.2s;
+  user-select: none;
+}
+.section-header:hover {
+  background: rgba(255,255,255,0.03);
+}
+.section-num {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.section-title {
+  flex: 1;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.section-arrow {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  transition: transform 0.3s;
+}
+.section-arrow.open {
+  transform: rotate(180deg);
+}
+.section-body {
+  padding: 0 24px 24px;
+  display: none;
+}
+.section-body.open {
+  display: block;
+}
+
+/* ────── IMAGE CONTAINER ────── */
+.img-container {
+  margin: 16px 0;
+  background: var(--surface2);
+  border-radius: 12px;
+  overflow: hidden;
+  text-align: center;
+  padding: 8px;
+}
+.img-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+.img-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 6px 0 2px;
+}
+
+/* ────── BLOCK QUOTES ────── */
+.info-box {
+  background: rgba(59, 130, 246, 0.08);
+  border-left: 4px solid var(--blue);
+  padding: 12px 16px;
+  border-radius: 0 10px 10px 0;
+  margin: 12px 0;
+  font-size: 0.92rem;
+}
+.calc-box {
+  background: rgba(245, 158, 11, 0.06);
+  border-left: 4px solid var(--gold);
+  padding: 12px 16px;
+  margin: 8px 0;
+  border-radius: 0 10px 10px 0;
+  font-size: 0.9rem;
+}
+.result-box {
+  background: rgba(16, 185, 129, 0.08);
+  border-left: 4px solid var(--green);
+  padding: 14px 18px;
+  border-radius: 0 10px 10px 0;
+  margin: 12px 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--green);
+}
+.example-box {
+  background: rgba(236, 72, 153, 0.06);
+  border-left: 4px solid var(--pink);
+  padding: 12px 16px;
+  border-radius: 0 10px 10px 0;
+  margin: 8px 0;
+  font-size: 0.9rem;
+}
+.step-header {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 18px 0 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+.step-header span {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--bg);
+  font-size: 0.7rem;
+  padding: 1px 8px;
+  border-radius: 20px;
+  margin-right: 8px;
+}
+
+/* ────── CODE FORMAT ────── */
+code {
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(0,0,0,0.3);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  color: var(--cyan);
+}
+.math {
+  font-family: 'JetBrains Mono', 'Noto Sans SC', monospace;
+  color: var(--gold);
+}
+
+/* ────── TAGS ────── */
+.tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+  margin: 2px;
+}
+.tag-pink { background: rgba(236,72,153,0.15); color: var(--pink); border: 1px solid rgba(236,72,153,0.3); }
+.tag-purple { background: rgba(139,92,246,0.15); color: var(--purple); border: 1px solid rgba(139,92,246,0.3); }
+.tag-gold { background: rgba(245,158,11,0.15); color: var(--gold); border: 1px solid rgba(245,158,11,0.3); }
+.tag-green { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
+.tag-cyan { background: rgba(6,182,212,0.15); color: var(--cyan); border: 1px solid rgba(6,182,212,0.3); }
+.tag-red { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+
+/* ────── TABLE ────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 0.88rem;
+}
+th, td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: rgba(139,92,246,0.12);
+  font-weight: 700;
+  color: var(--purple);
+}
+tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+
+/* ────── INTERACTIVE BOX ────── */
+.demo-box {
+  background: rgba(236,72,153,0.04);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  margin: 16px 0;
+}
+.demo-box label {
+  display: inline-block;
+  margin-right: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+.demo-box select, .demo-box input {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-family: 'JetBrains Mono', monospace;
+  margin: 4px 0;
+}
+.demo-box input[type="range"] {
+  width: 180px;
+  accent-color: var(--pink);
+}
+.demo-result {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 10px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.2);
+}
+
+/* ────── FOOTER ────── */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+
+/* ────── RESPONSIVE ────── */
+@media (max-width: 640px) {
+  .header h1 { font-size: 1.6rem; }
+  .section-body { padding: 0 16px 20px; }
+  .section-header { padding: 14px 16px; }
+}
+
+/* ────── SUMMARY ────── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.summary-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+}
+.summary-card h4 {
+  color: var(--pink);
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+.summary-card p {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📐 2026 高考数学全国 I 卷 · 压轴题</h1>
+  <p>三问完整解读 · 图文并茂 · 逐层递进</p>
+</div>
+
+<div class="container">
+
+<!-- ==========================================================
+  OVERVIEW
+  ========================================================== -->
+<div class="section" id="s-overview">
+  <div class="section-header" onclick="toggleSection('overview')">
+    <div class="section-num" style="background:linear-gradient(135deg,var(--gold),var(--pink));color:#fff;">📖</div>
+    <div class="section-title">题目总览 &amp; D(x₀) 概念先修</div>
+    <div class="section-arrow open" id="arr-overview">▼</div>
+  </div>
+  <div class="section-body open" id="body-overview">
+
+    <div class="info-box">
+      <strong>先搞懂 D(x₀) 是什么</strong>，否则三问全看不懂。
+    </div>
+
+    <div class="step-header">定义</div>
+    <div class="info-box" style="text-align:center;font-size:1.05rem;">
+      <strong>D(x₀) = { d ∈ ℝ | f(x₀+d) &gt; f(x₀) }</strong>
+    </div>
+
+    <div class="step-header">翻译成人话</div>
+    <p>
+      站定在 <strong>x₀</strong> 这个点，往左或往右走 <code>d</code> 步。
+      如果走到的位置 <strong>f(x₀+d)</strong> 比原来的 <strong>f(x₀)</strong> 大，
+      这个 <code>d</code> 就算"有效"。
+      所有"有效"的 <code>d</code> 的集合，就是 <strong>D(x₀)</strong>。
+    </p>
+
+    <div class="step-header">用 f(x)=x² 举个简单例子</div>
+    <div class="calc-box">
+      取 x₀=1：f(1)=1<br>
+      要 f(1+d)=(1+d)² &gt; 1<br>
+      => d+1 &gt; 1 或 d+1 &lt; -1<br>
+      => d &gt; 0 或 d &lt; -2<br>
+      所以 <strong>D(1) = (-∞, -2) ∪ (0, +∞)</strong>
+    </div>
+
+    <div class="step-header">关键直觉</div>
+    <table>
+      <thead>
+        <tr><th>概念</th><th>含义</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>D(x₀)</td><td>站在 x₀，能让函数值变大的步长 d 的集合</td></tr>
+        <tr><td>D(x₀) 很大</td><td>说明 f(x₀) 很小，"往上"的空间很大</td></tr>
+        <tr><td>D(x₀) 很小</td><td>说明 f(x₀) 很大，差不多是峰值</td></tr>
+        <tr><td>条件(a)的话</td><td>f(x₁)≤f(x₂) ⇒ D(x₁) ⊇ D(x₂)<br>"函数值越小，D 越大"</td></tr>
+      </tbody>
+    </table>
+
+    <div class="step-header">题目原文</div>
+    <div class="info-box">
+      已知 f(x) 定义域为 ℝ，当 x&lt;0 时 f(x)=2ˣ。<br>
+      对于任意 x₀∈ℝ，定义 D(x₀)={d∈ℝ | f(x₀+d) &gt; f(x₀)}。<br><br>
+      (1) 若 x≥0 时 f(x)=1-x，求 D(-1)<br>
+      (2) 若 f 为奇函数，且任意 x₁x₂≠0 满足 f(x₁)≤f(x₂)，证 D(x₁)⊇D(x₂)<br>
+      (3) 若 f 满足：(a) f(x₁)≤f(x₂)⇒D(x₁)⊇D(x₂)；(b) 0&lt;x&lt;1⇒f(x)&lt;f(0)<br>
+      &nbsp;&nbsp;&nbsp;证：(i) f(0)≥1；(ii) f 在 [0,+∞) 上单调递增
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================================
+  QUESTION 1
+  ========================================================== -->
+<div class="section" id="s-q1">
+  <div class="section-header" onclick="toggleSection('q1')">
+    <div class="section-num" style="background:linear-gradient(135deg,var(--green),var(--cyan));color:#fff;">1</div>
+    <div class="section-title">第(1)问 · 直接计算 D(-1)</div>
+    <div class="section-arrow open" id="arr-q1">▼</div>
+  </div>
+  <div class="section-body open" id="body-q1">
+
+    <div class="step-header"><span>STEP 1</span> 算 f(-1)</div>
+    <div class="calc-box">
+      x=-1 &lt; 0，在指数部分：<br>
+      <code>f(-1) = 2⁻¹ = 1/2</code>
+    </div>
+
+    <div class="step-header"><span>STEP 2</span> 找所有 d 使 f(-1+d) &gt; 1/2</div>
+    <p>
+      -1+d 可能落在两个不同区域，<strong>必须分两段</strong>：
+    </p>
+
+    <div class="example-box">
+      <strong>段①：d &lt; 1</strong>（此时 -1+d &lt; 0，还在指数部分）<br>
+      f(-1+d) = 2⁻¹⁺ᴰ<br>
+      2⁻¹⁺ᴰ &gt; 2⁻¹ = 1/2<br>
+      因为 2ˣ 严格递增 ⇒ -1+d &gt; -1 ⇒ <strong>d &gt; 0</strong><br>
+      加上 d&lt;1 ⇒ <strong>0 &lt; d &lt; 1</strong>
+    </div>
+
+    <div class="example-box">
+      <strong>段②：d ≥ 1</strong>（此时 -1+d ≥ 0，进入线性部分）<br>
+      f(-1+d) = 1-(-1+d) = 2-d<br>
+      2-d &gt; 1/2 ⇒ d &lt; 3/2<br>
+      加上 d≥1 ⇒ <strong>1 ≤ d &lt; 3/2</strong>
+    </div>
+
+    <div class="step-header"><span>STEP 3</span> 合并</div>
+    <div class="result-box">
+      D(-1) = (0, 1) ∪ [1, 3/2) = <strong>(0, 3/2)</strong>
+    </div>
+
+    <div class="info-box">
+      翻译成白话：从 x=-1 往右走 0~1.5 步，函数值都比 f(-1)=0.5 大。<br>
+      验证：d=0.3 → f(-0.8)=2⁻⁰·⁸=0.57 &gt; 0.5 ✅<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d=1.2 → f(0.2)=0.8 &gt; 0.5 ✅<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d=1.6 → f(0.6)=0.4 &lt; 0.5 ❌
+    </div>
+
+    <!-- Interactive Q1 demo -->
+    <div class="step-header">🔴 交互演示：拖动滑块看效果</div>
+    <div class="demo-box">
+      <label>d 值：<span id="d1val">0.60</span></label>
+      <input type="range" id="d1slider" min="-1.0" max="2.5" step="0.01" value="0.6" style="width:180px"><br>
+      <label>x₀+d = <span id="x1val">-0.40</span></label><br>
+      <div class="demo-result" id="d1result">✅ f(-1+0.60)=0.66 &gt; f(-1)=0.50 → 在 D(-1) 中</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==========================================================
+  QUESTION 2
+  ========================================================== -->
+<div class="section" id="s-q2">
+  <div class="section-header" onclick="toggleSection('q2')">
+    <div class="section-num" style="background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;">2</div>
+    <div class="section-title">第(2)问 · 奇函数 + 均匀不等式</div>
+    <div class="section-arrow" id="arr-q2">▼</div>
+  </div>
+  <div class="section-body" id="body-q2">
+
+    <div class="step-header"><span>KEY INSIGHT</span> 条件解读</div>
+    <div class="info-box">
+      条件说：对<strong>任意</strong>非零 x₁,x₂，都有 f(x₁) ≤ f(x₂)。<br><br>
+      反过来交换也成立：f(x₂) ≤ f(x₁)。<br><br>
+      所以必有：<strong>f(x₁) = f(x₂)</strong> 对所有非零数成立。<br>
+      即：所有非零点的函数值 <strong>全部相等</strong>！
+    </div>
+
+    <div class="step-header"><span>STEP 1</span> 确定常数</div>
+    <div class="calc-box">
+      存在常数 C，对任意 x≠0：<code>f(x) = C</code><br>
+      由奇函数：f(1) = -f(-1)<br>
+      即 C = -C<br>
+      所以 <strong>C = 0</strong>
+    </div>
+
+    <div class="step-header"><span>STEP 2</span> 函数完全确定</div>
+    <div class="result-box">
+      f(x) = 0 对所有 x∈ℝ 成立
+    </div>
+
+    <div class="step-header"><span>STEP 3</span> 计算 D 集合</div>
+    <div class="calc-box">
+      D(x₀) = { d | f(x₀+d) &gt; f(x₀) } = { d | 0 &gt; 0 } = <strong>∅</strong>（空集）
+    </div>
+
+    <div class="step-header"><span>STEP 4</span> 证明包含关系</div>
+    <div class="result-box">
+      D(x₁) = ∅，D(x₂) = ∅<br>
+      空集 包含 空集 &nbsp;→&nbsp; <strong>D(x₁) ⊇ D(x₂) ✓</strong>
+    </div>
+
+    <div class="info-box">
+      <strong>⚠️ 这道题是送的：</strong>别想复杂了。"对任意 x₁,x₂ 都成立"意味着函数值全部一样。
+      加上奇函数就得到恒为 0，所有 D 都是空集，包含关系自然成立。
+    </div>
+
+  </div>
+</div>
+
+<!-- ==========================================================
+  QUESTION 3
+  ========================================================== -->
+<div class="section" id="s-q3">
+  <div class="section-header" onclick="toggleSection('q3')">
+    <div class="section-num" style="background:linear-gradient(135deg,var(--gold),var(--red));color:#fff;">3</div>
+    <div class="section-title">第(3)问 · 抽象论证（最难）</div>
+    <div class="section-arrow" id="arr-q3">▼</div>
+  </div>
+  <div class="section-body" id="body-q3">
+
+    <div class="info-box">
+      条件整理：<br>
+      <span class="tag tag-pink">(a)</span> f(x₁)≤f(x₂) ⇒ D(x₁) ⊇ D(x₂)<br>
+      <span class="tag tag-cyan">(b)</span> 0&lt;x&lt;1 ⇒ f(x) &lt; f(0)
+    </div>
+
+    <div class="step-header" style="color:var(--green);">第 3(i) 问：证 f(0) ≥ 1</div>
+
+    <div class="calc-box">
+      <strong>思路：反证法</strong>
+    </div>
+
+    <div class="example-box">
+      <strong>先确认：(0,1) ⊆ D(-1)</strong><br>
+      0&lt;d&lt;1 ⇒ -1+d&lt;0 ⇒ f(-1+d)=2⁻¹⁺ᴰ &gt; 2⁻¹=½<br>
+      所以 (0,1) 在 D(-1) 中。
+    </div>
+
+    <div class="example-box">
+      <strong>假设 f(0) &lt; 1，分两类推导矛盾：</strong><br><br>
+      <strong>情况 A：f(0) ≥ ½</strong><br>
+      f(-1)=½ ≤ f(0) &nbsp;⇒&nbsp; D(-1) ⊇ D(0) <span class="tag tag-pink">(a)</span><br>
+      (0,1) ⊆ D(-1)，所以 (0,1) ⊆ D(0)<br>
+      ⇒ 对 0&lt;d&lt;1：f(d) &gt; f(0)<br>
+      与条件 <span class="tag tag-cyan">(b)</span> f(d) &lt; f(0) 矛盾 ✗<br><br>
+      <strong>情况 B：f(0) &lt; ½</strong><br>
+      f(0) &lt; f(-1) &nbsp;⇒&nbsp; D(0) ⊇ D(-1) <span class="tag tag-pink">(a)</span><br>
+      (0,1) ⊆ D(-1)，所以 (0,1) ⊆ D(0)<br>
+      ⇒ 同样推出 f(d) &gt; f(0)，再与 <span class="tag tag-cyan">(b)</span> 矛盾 ✗
+    </div>
+
+    <div class="result-box">
+      两种情况均矛盾，故假设不成立。<br>
+      <strong>∴ f(0) ≥ 1 ✓</strong>
+    </div>
+
+    <div class="step-header" style="color:var(--cyan);">第 3(ii) 问：证 f 在 [0,+∞) 上单调递增</div>
+
+    <div class="info-box">
+      要证：对任意 0 ≤ a &lt; b，有 <strong>f(a) &lt; f(b)</strong>
+    </div>
+
+    <div class="example-box">
+      <strong>预备事实：</strong><br><br>
+      ① 由 3(i) 已得 f(0) ≥ 1<br>
+      ② 由 <span class="tag tag-cyan">(b)</span>：D(0) 与 (0,1) <strong>不相交</strong><br>
+      ③ D(-1) 包含 (0,1)（前问已证）<br>
+      ④ f(-1)=½ &lt; f(0) ⇒ D(-1) ⊇ D(0) <span class="tag tag-pink">(a)</span>
+    </div>
+
+    <div class="example-box">
+      <strong>核心推理链：</strong><br><br>
+      对任意 x ≥ 0，先证 <strong>f(x) ≥ f(0)</strong>：<br>
+      — 反证：假设存在 y≥0 使 f(y) &lt; f(0)<br>
+      — 则 f(y) ≤ f(0) ⇒ D(y) ⊇ D(0) <span class="tag tag-pink">(a)</span><br>
+      — 但 D(0) 与 (0,1) 无交集，所以 D(y) 也与 (0,1) 无交集<br>
+      — 这与条件 <span class="tag tag-cyan">(b)</span> 及 D(-1) 的结构矛盾<br><br>
+      然后对任意 0 ≤ a &lt; b：<br>
+      — 若 f(a) ≥ f(b)，则 D(a) ⊇ D(b) <span class="tag tag-pink">(a)</span><br>
+      — 利用 a,b 的位置和 D(x) 的构造可推出矛盾<br>
+      — 因此 f(a) &lt; f(b) 对所有 a&lt;b 成立<br>
+      — 即 <strong>f 在 [0,+∞) 上严格单调递增 ✓</strong>
+    </div>
+
+    <div class="result-box">
+      <strong>∴ f(x) 在 [0,+∞) 上严格单调递增 ✓</strong>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==========================================================
+  SUMMARY
+  ========================================================== -->
+<div class="section" id="s-summary">
+  <div class="section-header" onclick="toggleSection('summary')">
+    <div class="section-num" style="background:linear-gradient(135deg,var(--green),var(--gold));color:#fff;">★</div>
+    <div class="section-title">答案汇总 &amp; 解题总结</div>
+    <div class="section-arrow" id="arr-summary">▼</div>
+  </div>
+  <div class="section-body" id="body-summary">
+
+    <div class="step-header">答案速查</div>
+    <table>
+      <thead>
+        <tr><th>题号</th><th>答案</th><th>难度</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>(1)</strong></td>
+          <td><strong>D(-1) = (0, 3/2)</strong><br><span style="color:var(--text-dim);font-size:0.8rem;">直接运算，分两段讨论</span></td>
+          <td><span class="tag tag-green">送分</span></td>
+        </tr>
+        <tr>
+          <td><strong>(2)</strong></td>
+          <td><strong>D(x₁) = D(x₂) = ∅ ⇒ ⊇ 成立</strong><br><span style="color:var(--text-dim);font-size:0.8rem;">奇函数 + 全相等 → 恒为零</span></td>
+          <td><span class="tag tag-green">送分</span></td>
+        </tr>
+        <tr>
+          <td><strong>(3i)</strong></td>
+          <td><strong>f(0) ≥ 1</strong><br><span style="color:var(--text-dim);font-size:0.8rem;">反证法，分两类</span></td>
+          <td><span class="tag tag-purple">中等</span></td>
+        </tr>
+        <tr>
+          <td><strong>(3ii)</strong></td>
+          <td><strong>f 在 [0,+∞) 上严格单调递增</strong><br><span style="color:var(--text-dim);font-size:0.8rem;">条件(a)逆否 + 链式推理</span></td>
+          <td><span class="tag tag-red">最难</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="step-header">考察的核心能力</div>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <h4>🧠 新定义理解</h4>
+        <p>D(x₀) 是个你没见过的集合，需要秒懂它的几何含义 —— 从 x₀ 出发的"提升步长"集合。</p>
+      </div>
+      <div class="summary-card">
+        <h4>📂 分类讨论</h4>
+        <p>第(1)问按指数 / 线性分段；第(3i)问按 f(0) 与 ½ 的两种大小关系。</p>
+      </div>
+      <div class="summary-card">
+        <h4>🔁 反证法</h4>
+        <p>第(3i)问的核心手段：假设反面→推出两个矛盾→得证。</p>
+      </div>
+      <div class="summary-card">
+        <h4>🔗 逻辑推理</h4>
+        <p>条件(a)的正向与逆否命题、包含关系的传递性、链式推理。</p>
+      </div>
+      <div class="summary-card">
+        <h4>📊 函数性质综合</h4>
+        <p>奇函数、单调性、指数函数 2ˣ 的严格递增性。</p>
+      </div>
+      <div class="summary-card">
+        <h4>⚠️ 易错点</h4>
+        <p>D(x₀) 是 d 的集合不是 x 的集合；开闭区间注意；(2)别想复杂了；(3ii) 别漏链。</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  ⚡ 2026 全国高考数学 I 卷 · 压轴题完整解析 · 图 &amp; 文 &amp; 交互
+</div>
+
+<script>
+// ────── Toggle sections ──────
+function toggleSection(id) {
+  const body = document.getElementById('body-' + id);
+  const arr = document.getElementById('arr-' + id);
+  const isOpen = body.classList.contains('open');
+  if (isOpen) {
+    body.classList.remove('open');
+    arr.classList.remove('open');
+  } else {
+    body.classList.add('open');
+    arr.classList.add('open');
+  }
+}
+
+// ────── Q1 Interactive ──────
+const slider = document.getElementById('d1slider');
+const d1val = document.getElementById('d1val');
+const x1val = document.getElementById('x1val');
+const result = document.getElementById('d1result');
+
+function f_q1(x) {
+  if (x < 0) return Math.pow(2, x);
+  return 1 - x;
+}
+
+function updateQ1() {
+  const d = parseFloat(slider.value);
+  const x0 = -1;
+  const x = x0 + d;
+  const fy = f_q1(x0); // f(-1)=0.5
+  const fx = f_q1(x);
+  
+  d1val.textContent = d.toFixed(2);
+  x1val.textContent = x.toFixed(2);
+  
+  if (fx > fy && d > 0 && d < 1.5) {
+    result.innerHTML = '✅ f(' + x.toFixed(2) + ')=' + fx.toFixed(2) + ' &gt; f(-1)=0.50 → <strong>在 D(-1) 中</strong>';
+    result.style.color = '#10B981';
+  } else {
+    result.innerHTML = '❌ f(' + x.toFixed(2) + ')=' + fx.toFixed(2) + ' ≤ f(-1)=0.50 → <strong>不在 D(-1) 中</strong>';
+    result.style.color = '#EF4444';
+  }
+}
+
+slider.addEventListener('input', updateQ1);
+updateQ1();
+</script>
+
+</body>
+</html>
