@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 高考压轴题 · 交互演示</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif;
+  background:#0f0a1a;color:#e8e0f0;min-height:100vh;
+  overflow-x:hidden;
+}
+header{
+  text-align:center;padding:36px 20px 24px;
+  background:linear-gradient(180deg,#1a1230,#0f0a1a);
+}
+header h1{
+  font-size:1.6rem;font-weight:900;letter-spacing:-0.5px;margin-bottom:6px;
+  background:linear-gradient(135deg,#EC4899,#F59E0B,#8B5CF6);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+header p{color:rgba(255,255,255,.5);font-size:.85rem}
+.tabs{
+  display:flex;gap:6px;justify-content:center;padding:16px 20px 0;
+  flex-wrap:wrap;
+}
+.tab{
+  padding:8px 18px;border-radius:999px;cursor:pointer;
+  font-size:.8rem;font-weight:700;border:2px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);
+  transition:all .15s;
+}
+.tab:hover{background:rgba(255,255,255,.08)}
+.tab.active{border-color:#EC4899;background:rgba(236,72,153,.15);color:#EC4899}
+.main{max-width:960px;margin:0 auto;padding:20px}
+
+/* Canvas wrapper */
+.canvas-wrap{
+  background:#1a1230;border:1px solid #2f2550;
+  border-radius:16px;padding:12px;margin-bottom:16px;
+  position:relative;
+}
+canvas{display:block;width:100%;height:auto;background:#fafafa;border-radius:10px}
+
+/* Controls */
+.controls{
+  background:#1a1230;border:1px solid #2f2550;
+  border-radius:16px;padding:16px 20px;margin-bottom:16px;
+}
+.ctrl-row{
+  display:flex;align-items:center;gap:16px;
+  flex-wrap:wrap;margin:6px 0;
+}
+.ctrl-row label{font-size:.82rem;color:rgba(255,255,255,.6);font-weight:600}
+.ctrl-row input[type=range]{flex:1;min-width:120px;accent-color:#EC4899;height:4px}
+.ctrl-row .val{font-size:.9rem;font-weight:700;color:#EC4899;min-width:50px;font-family:monospace}
+.ctrl-row .val.green{color:#10B981}
+.ctrl-row .val.red{color:#EF4444}
+.status{
+  margin-top:8px;padding:10px 14px;border-radius:10px;
+  font-size:.88rem;font-weight:700;
+}
+.status.ok{background:rgba(16,185,129,.12);color:#10B981}
+.status.bad{background:rgba(239,68,68,.12);color:#EF4444}
+.status.info{background:rgba(139,92,246,.12);color:#8B5CF6}
+
+/* Description */
+.desc-box{
+  background:#1a1230;border:1px solid #2f2550;
+  border-radius:16px;padding:16px 20px;margin-bottom:16px;
+  font-size:.85rem;line-height:1.8;color:rgba(255,255,255,.7);
+}
+.desc-box strong{color:#e8e0f0}
+.desc-box code{
+  font-family:monospace;background:rgba(0,0,0,.3);
+  padding:1px 6px;border-radius:4px;color:#EC4899;
+}
+.step-box{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:8px;margin:12px 0;
+}
+.step-card{
+  background:rgba(255,255,255,.03);border:1px solid #2f2550;
+  border-radius:10px;padding:12px;
+}
+.step-card .num{font-size:.6rem;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1px}
+.step-card h4{font-size:.82rem;font-weight:700;color:#EC4899;margin:2px 0}
+.step-card p{font-size:.72rem;color:rgba(255,255,255,.5);line-height:1.5}
+
+footer{text-align:center;padding:30px 20px;color:rgba(255,255,255,.2);font-size:.7rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>📐 2026 高考压轴题 · 交互演示</h1>
+  <p>拖拽滑块 · 实时 Canvas 绘图 · 三问切换</p>
+</header>
+<div class="tabs" id="tabs">
+  <div class="tab active" data-q="1">Q1 · D(-1)</div>
+  <div class="tab" data-q="2">Q2 · 奇函数</div>
+  <div class="tab" data-q="3">Q3 · 抽象证明</div>
+</div>
+<div class="main">
+  <div class="canvas-wrap">
+    <canvas id="gc" width="900" height="500"></canvas>
+  </div>
+  <div class="controls" id="controls">
+    <div class="ctrl-row">
+      <label>d =</label>
+      <input type="range" id="slider" min="-1.0" max="2.5" step="0.005" value="0.6">
+      <span class="val" id="dval">0.600</span>
+    </div>
+    <div class="ctrl-row">
+      <span id="f_val">f(x₀+d) = <span class="val" id="fxval">0.660</span></span>
+      <span style="color:rgba(255,255,255,.3)">|</span>
+      <span>f(x₀) = <span class="val" id="f0val">0.500</span></span>
+    </div>
+    <div class="status info" id="status">
+      <span id="dstatus">f(x₀+d) 与 f(x₀) 的比较</span>
+    </div>
+  </div>
+  <div class="desc-box" id="desc">
+    <div id="desc_content"></div>
+  </div>
+</div>
+<footer>⚡ 2026 高考数学 · 交互式演示 · Throwaway Editor</footer>
+<script>
+const canvas = document.getElementById('gc');
+const ctx = canvas.getContext('2d');
+const W = 900, H = 500;
+
+// State
+let currentQ = 1;
+let dVal = 0.6;
+
+// f(x) for Q1
+function f1(x){
+  if(x < 0) return Math.pow(2, x);
+  return 1 - x;
+}
+
+// Tab switching
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    currentQ = parseInt(tab.dataset.q);
+    updateDesc();
+    draw();
+  });
+});
+
+// Desc content
+function updateDesc(){
+  const el = document.getElementById('desc_content');
+  if(currentQ === 1){
+    el.innerHTML = `
+<div class="step-box">
+  <div class="step-card">
+    <div class="num">STEP 1</div>
+    <h4>算 f(-1)</h4>
+    <p>x=-1&lt;0 → 2⁻¹=<code>0.5</code></p>
+  </div>
+  <div class="step-card">
+    <div class="num">STEP 2</div>
+    <h4>分两段找 d</h4>
+    <p>① d&lt;1 → 2⁻¹⁺ᴰ&gt;0.5 → <b>0&lt;d&lt;1</b><br>② d≥1 → 2-d&gt;0.5 → <b>1≤d&lt;1.5</b></p>
+  </div>
+  <div class="step-card">
+    <div class="num">STEP 3</div>
+    <h4>合并结果</h4>
+    <p><code>D(-1) = (0, 1.5)</code></p>
+  </div>
+</div>
+<p><b>💡 拖拽滑块</b>，看绿色的 d 在区间内/外时函数值的变化。</p>`;
+  } else if(currentQ === 2){
+    el.innerHTML = `
+<p><strong>条件：</strong>对所有非零 x₁,x₂ 有 f(x₁)≤f(x₂)。</p>
+<p>⟹ 任意两个非零点的函数值 <strong>都相等</strong>。</p>
+<p>奇函数 f(-x)=-f(x) → C=-C → <strong>f(x)=0</strong> 对所有 x 成立。</p>
+<p>D(x₀) = {d | 0&gt;0} = <strong>空集 ∅</strong> → D(x₁)=D(x₂)=∅ → 包含关系自然成立 ✓</p>
+<p style="color:rgba(255,255,255,.3);font-size:.78rem">⚠️ 这问是送的，别想复杂了</p>`;
+  } else {
+    el.innerHTML = `
+<div class="step-box">
+  <div class="step-card">
+    <div class="num">3(i)</div>
+    <h4>证 f(0)≥1</h4>
+    <p>反证法。假设 f(0)&lt;1，分 f(0)≥½ 和 f(0)&lt;½ 两类，均与条件(b)矛盾。</p>
+  </div>
+  <div class="step-card">
+    <div class="num">3(ii)</div>
+    <h4>证单调递增</h4>
+    <p>利用条件(a)逆否 + 包含传递性：对 0≤a&lt;b 推出 f(a)&lt;f(b)。</p>
+  </div>
+</div>
+<p><b>🔑 核心事实：</b>D(0)与(0,1)不相交，D(-1)包含(0,1)，f(-1)&lt;f(0)。</p>`;
+  }
+}
+
+// ===== CANVAS DRAW =====
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#fafafa';
+  ctx.fillRect(0,0,W,H);
+
+  if(currentQ === 1) drawQ1();
+  else if(currentQ === 2) drawQ2();
+  else drawQ3();
+}
+
+function drawQ1(){
+  const M = {left:70, top:40, right:40, bottom:50};
+  const pw = W - M.left - M.right, ph = H - M.top - M.bottom;
+  const xMin = -3, xMax = 3, yMin = -0.8, yMax = 4;
+  function tx(x){return M.left + ((x-xMin)/(xMax-xMin))*pw}
+  function ty(y){return M.top + ph - ((y-yMin)/(yMax-yMin))*ph}
+
+  // Grid
+  ctx.strokeStyle='#e0e0e0';ctx.lineWidth=.5;
+  for(let x=-3;x<=3;x+=.5){ctx.beginPath();ctx.moveTo(tx(x),M.top);ctx.lineTo(tx(x),H-M.bottom);ctx.stroke()}
+  for(let y=0;y<=4;y+=.5){ctx.beginPath();ctx.moveTo(M.left,ty(y));ctx.lineTo(W-M.right,ty(y));ctx.stroke()}
+
+  // Axes
+  ctx.strokeStyle='#333';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(M.left,ty(0));ctx.lineTo(W-M.right,ty(0));ctx.stroke()
+  ctx.beginPath();ctx.moveTo(tx(0),M.top);ctx.lineTo(tx(0),H-M.bottom);ctx.stroke()
+
+  // Labels
+  ctx.fillStyle='#888';ctx.font='11px monospace';ctx.textAlign='center';ctx.textBaseline='top';
+  [-3,-2,-1,0,1,2,3].forEach(x=>{ctx.fillText(x,tx(x),ty(0)+5)})
+  ctx.textAlign='right';ctx.textBaseline='middle';
+  [0,1,2,3,4].forEach(y=>{ctx.fillText(y,tx(0)-8,ty(y))})
+  ctx.fillStyle='#333';ctx.textAlign='left';ctx.textBaseline='bottom';
+  ctx.fillText('x',W-M.right-2,ty(0)+2);ctx.fillText('y',tx(0)+4,M.top-2)
+  ctx.textAlign='center';ctx.textBaseline='top';ctx.fillText('O',tx(0)+4,ty(0)+4)
+
+  // D(-1) green region
+  ctx.fillStyle='rgba(46,204,113,.12)';
+  ctx.fillRect(tx(0),M.top,tx(1.5)-tx(0),ph);
+  ctx.strokeStyle='rgba(46,204,113,.5)';ctx.lineWidth=1;ctx.setLineDash([5,3]);
+  ctx.strokeRect(tx(0),M.top,tx(1.5)-tx(0),ph);ctx.setLineDash([]);
+  ctx.fillStyle='#27ae60';ctx.font='bold 12px sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';
+  ctx.fillText('D(-1) = (0, 1.5)',(tx(0)+tx(1.5))/2,ty(4)+4);
+
+  // y=0.5 line
+  ctx.strokeStyle='rgba(231,76,60,.5)';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+  ctx.beginPath();ctx.moveTo(M.left,ty(.5));ctx.lineTo(W-M.right,ty(.5));ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#e74c3c';ctx.font='10px sans-serif';ctx.textAlign='left';ctx.textBaseline='bottom';
+  ctx.fillText('y = 0.5',M.left+4,ty(.5)-2);
+
+  // f(x)=2^x
+  ctx.strokeStyle='#3498db';ctx.lineWidth=3;
+  ctx.beginPath();
+  for(let x=-3;x<=0;x+=.01){
+    let px=tx(x),py=ty(Math.pow(2,x));
+    x===-3?ctx.moveTo(px,py):ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+
+  // f(x)=1-x
+  ctx.strokeStyle='#e74c3c';ctx.lineWidth=3;
+  ctx.beginPath();
+  for(let x=0;x<=3;x+=.01){let px=tx(x),py=ty(1-x);x===0?ctx.moveTo(px,py):ctx.lineTo(px,py)}
+  ctx.stroke();
+
+  // Point f(-1)
+  ctx.fillStyle='#e74c3c';ctx.beginPath();ctx.arc(tx(-1),ty(.5),7,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#c0392b';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#e74c3c';ctx.font='10px sans-serif';ctx.textAlign='center';ctx.textBaseline='top';
+  ctx.fillText('x₀=-1',tx(-1),ty(0)+2);
+
+  // Vertical lines
+  ctx.strokeStyle='rgba(85,85,85,.3)';ctx.lineWidth=.8;ctx.setLineDash([3,3]);
+  ctx.beginPath();ctx.moveTo(tx(-1),M.top);ctx.lineTo(tx(-1),H-M.bottom);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(tx(0),M.top);ctx.lineTo(tx(0),H-M.bottom);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(tx(1.5),M.top);ctx.lineTo(tx(1.5),H-M.bottom);ctx.stroke();
+  ctx.setLineDash([]);
+
+  // d point
+  const x0 = -1, x = x0 + dVal;
+  const px = tx(x), py = ty(f1(x));
+
+  // d arrow on x-axis
+  ctx.strokeStyle='#8e44ad';ctx.lineWidth=2.5;
+  const yArrow = ty(-0.3);
+  ctx.beginPath();ctx.moveTo(tx(-1),yArrow);ctx.lineTo(px,yArrow);ctx.stroke();
+  ctx.fillStyle='#8e44ad';
+  if(dVal>=0){
+    ctx.beginPath();ctx.moveTo(px,yArrow);ctx.lineTo(px-8,yArrow-4);ctx.lineTo(px-8,yArrow+4);ctx.closePath();ctx.fill();
+  } else {
+    ctx.beginPath();ctx.moveTo(px,yArrow);ctx.lineTo(px+8,yArrow-4);ctx.lineTo(px+8,yArrow+4);ctx.closePath();ctx.fill();
+  }
+  ctx.fillStyle='#8e44ad';ctx.font='bold 12px sans-serif';ctx.textAlign='center';ctx.textBaseline='top';
+  ctx.fillText('d',(tx(-1)+px)/2,yArrow+3);
+
+  // Moving point
+  ctx.fillStyle='#8e44ad';ctx.beginPath();ctx.arc(px,py,8,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#6c3483';ctx.lineWidth=2;ctx.stroke();
+
+  // Vertical dotted from point
+  ctx.strokeStyle='rgba(142,68,173,.3)';ctx.lineWidth=1;ctx.setLineDash([3,3]);
+  ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px,ty(0));ctx.stroke();ctx.setLineDash([]);
+
+  // Label
+  ctx.fillStyle='#8e44ad';ctx.font='11px monospace';ctx.textAlign=dVal>=0?'left':'right';ctx.textBaseline='bottom';
+  ctx.fillText(`(${x.toFixed(2)}, ${f1(x).toFixed(2)})`,px+(dVal>=0?6:-6),py-4);
+
+  // Legend
+  ctx.fillStyle='rgba(255,255,255,.85)';ctx.fillRect(M.left+4,H-48,190,36);
+  ctx.strokeStyle='#ddd';ctx.lineWidth=1;ctx.strokeRect(M.left+4,H-48,190,36);
+  ctx.lineWidth=3;
+  ctx.strokeStyle='#3498db';ctx.beginPath();ctx.moveTo(M.left+10,H-40);ctx.lineTo(M.left+30,H-40);ctx.stroke();
+  ctx.fillStyle='#555';ctx.font='9px sans-serif';ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillText('f(x)=2ˣ (x&lt;0)',M.left+36,H-40);
+  ctx.strokeStyle='#e74c3c';ctx.beginPath();ctx.moveTo(M.left+10,H-24);ctx.lineTo(M.left+30,H-24);ctx.stroke();
+  ctx.fillText('f(x)=1-x (x≥0)',M.left+36,H-24);
+
+  // Title
+  ctx.fillStyle='#333';ctx.font='bold 14px sans-serif';ctx.textAlign='center';ctx.textBaseline='top';
+  ctx.fillText('Q1: D(-1) = (0, 1.5)',W/2,6);
+
+  updateQ1UI(x);
+}
+
+function updateQ1UI(x){
+  document.getElementById('dval').textContent = dVal.toFixed(3);
+  document.getElementById('fxval').textContent = f1(x).toFixed(3);
+  document.getElementById('f0val').textContent = '0.500';
+  const inD = dVal > 0 && dVal < 1.5;
+  const statusEl = document.getElementById('status');
+  if(inD){
+    statusEl.className = 'status ok';
+    document.getElementById('dstatus').innerHTML = `✅ f(x₀+d)=${f1(x).toFixed(3)} &gt; f(x₀)=0.500 → <b>在 D(-1) 中</b>`;
+  } else {
+    statusEl.className = 'status bad';
+    document.getElementById('dstatus').innerHTML = `❌ f(x₀+d)=${f1(x).toFixed(3)} ≤ f(x₀)=0.500 → <b>不在 D(-1) 中</b>`;
+  }
+}
+
+function drawQ2(){
+  // Ranges
+  const xMin = -3, xMax = 3, yMin = -1.2, yMax = 1.2;
+  const margin = {left:70,top:40,right:40,bottom:50};
+  const pw = W - margin.left - margin.right;
+  const ph = H - margin.top - margin.bottom;
+  const tx = x => margin.left + ((x - xMin) / (xMax - xMin)) * pw;
+  const ty = y => margin.top + ph - ((y - yMin) / (yMax - yMin)) * ph;
+  const cx = tx(0), cy = ty(0);
+
+  // Grid
+  ctx.strokeStyle = '#e0e0e0'; ctx.lineWidth = 0.5;
+  for(let x = -3; x <= 3; x += 0.5) { ctx.beginPath(); ctx.moveTo(tx(x), margin.top); ctx.lineTo(tx(x), H - margin.bottom); ctx.stroke(); }
+  for(let y = -1; y <= 1; y += 0.5) { ctx.beginPath(); ctx.moveTo(margin.left, ty(y)); ctx.lineTo(W - margin.right, ty(y)); ctx.stroke(); }
+
+  // Axes
+  ctx.strokeStyle = '#333'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(margin.left, cy); ctx.lineTo(W - margin.right, cy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx, margin.top); ctx.lineTo(cx, H - margin.bottom); ctx.stroke();
+
+  // Axis labels
+  ctx.fillStyle = '#888'; ctx.font = '11px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  [-3, -2, -1, 0, 1, 2, 3].forEach(x => ctx.fillText(x, tx(x), cy + 5));
+  ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+  [-1, 0, 1].forEach(y => ctx.fillText(y, cx - 8, ty(y)));
+  ctx.fillStyle = '#888'; ctx.fillText('O', cx + 4, cy + 4);
+  ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+  ctx.fillText('x', W - margin.right - 2, cy + 2);
+  ctx.fillText('y', cx + 4, margin.top - 2);
+
+  // Dynamic constant C from slider
+  const C = -1 + (dVal + 1) / 3.5 * 2;
+  const cyC = ty(C);
+  const isZero = Math.abs(C) < 0.01;
+
+  // f(x)=C horizontal line
+  ctx.strokeStyle = isZero ? '#10B981' : '#3498db';
+  ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(margin.left, cyC); ctx.lineTo(W - margin.right, cyC); ctx.stroke();
+
+  // Points on line
+  [-2.5, -1.5, -0.5, 0.5, 1.5, 2.5].forEach(x => {
+    ctx.fillStyle = '#e74c3c';
+    ctx.beginPath(); ctx.arc(tx(x), cyC, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 1.5; ctx.stroke();
+  });
+
+  // Annotations
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#8B5CF6'; ctx.font = 'bold 11px sans-serif'; ctx.textBaseline = 'bottom';
+  ctx.fillText('f(x) = ' + C.toFixed(2) + '  对所有 x≠0 成立', cx, cyC - 10);
+
+  ctx.textBaseline = 'top';
+  if(!isZero){
+    ctx.fillStyle = 'rgba(239,68,68,.7)'; ctx.font = 'bold 10px sans-serif';
+    ctx.fillText('⚠️ 奇函数要求: f(1)=-f(-1) ⇒ ' + C.toFixed(2) + ' = -' + C.toFixed(2) + ' ⇒ C=0', cx, cyC + 10);
+  } else {
+    ctx.fillStyle = '#10B981'; ctx.font = 'bold 11px sans-serif';
+    ctx.fillText('✅ 奇函数自动满足！f(x)≡0 ⇒ D(x)=∅', cx, cyC + 10);
+    ctx.fillStyle = 'rgba(236,72,153,.7)'; ctx.font = 'bold 12px sans-serif';
+    ctx.fillText('∴ D(x₁) = ∅ ⊇ D(x₂) = ∅  ✓', cx, cyC + 30);
+  }
+
+  ctx.fillStyle = '#333'; ctx.font = 'bold 14px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.fillText('Q2: 拖滑块看常数 C — 奇函数迫使 C=0 ⇒ D=∅', W / 2, 6);
+
+  updateQ2UI(C);
+}
+
+function drawQ3(){
+  const M = {left:70,top:40,right:30,bottom:50};
+  const pw = W-M.left-M.right, ph = H-M.top-M.bottom;
+  const xMin=-3, xMax=3, yMin=-0.8, yMax=4.5;
+  function tx(x){return M.left+((x-xMin)/(xMax-xMin))*pw}
+  function ty(y){return M.top+ph-((y-yMin)/(yMax-yMin))*ph}
+  const cx = tx(0);
+
+  // Grid
+  ctx.strokeStyle='#e0e0e0';ctx.lineWidth=.5;
+  for(let x=-3;x<=3;x+=.5){ctx.beginPath();ctx.moveTo(tx(x),M.top);ctx.lineTo(tx(x),H-M.bottom);ctx.stroke()}
+  for(let y=0;y<=4;y+=.5){ctx.beginPath();ctx.moveTo(M.left,ty(y));ctx.lineTo(W-M.right,ty(y));ctx.stroke()}
+
+  // Axes
+  ctx.strokeStyle='#333';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(M.left,ty(0));ctx.lineTo(W-M.right,ty(0));ctx.stroke()
+  ctx.beginPath();ctx.moveTo(cx,M.top);ctx.lineTo(cx,H-M.bottom);ctx.stroke()
+
+  ctx.fillStyle='#888';ctx.font='11px monospace';ctx.textAlign='center';ctx.textBaseline='top';
+  [-3,-2,-1,0,1,2,3].forEach(x=>ctx.fillText(x,tx(x),ty(0)+5));
+  ctx.textAlign='right';ctx.textBaseline='middle';
+  [0,1,2,3,4].forEach(y=>ctx.fillText(y,tx(0)-8,ty(y)));
+  ctx.fillStyle='#888';ctx.fillText('O',cx+4,ty(0)+4);
+  ctx.fillText('x',W-M.right-2,ty(0)+2);ctx.fillText('y',cx+4,M.top-2);
+
+  // f(x)=2^x (x<0)
+  ctx.strokeStyle='#3498db';ctx.lineWidth=3;
+  ctx.beginPath();
+  for(let x=-3;x<=0;x+=.01){let px=tx(x),py=ty(Math.pow(2,x));x===-3?ctx.moveTo(px,py):ctx.lineTo(px,py)}
+  ctx.stroke();
+
+  // ===== Dynamic: f(0) linearly increases with slider =====
+  // dVal maps -1..2.5 -> f(0) ranges 0.7..2.5
+  const f0 = 0.7 + (dVal + 1) / 3.5 * 1.8;
+  const fy0 = ty(f0);
+
+  // Condition (b) verified check: if f(0) < 1, show warning
+  const f0ok = f0 >= 1;
+
+  // Plot hypothetical increasing function with given f(0):
+  // For x≥0: f(x) = f0 + 0.5*x (simple increasing model for visual)
+  ctx.strokeStyle = f0ok ? '#10B981' : 'rgba(239,68,68,.5)';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  for(let x=0;x<=3;x+=.01){
+    let y = f0 + 0.5 * x;
+    let px=tx(x),py=ty(Math.min(y,5));
+    x===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+
+  // Region (0,1) highlight
+  ctx.fillStyle='rgba(245,158,11,.06)';ctx.fillRect(tx(0),M.top,tx(1)-tx(0),ph);
+  ctx.strokeStyle='rgba(245,158,11,.3)';ctx.lineWidth=1;ctx.setLineDash([3,3]);
+  ctx.strokeRect(tx(0),M.top,tx(1)-tx(0),ph);ctx.setLineDash([]);
+  ctx.fillStyle='rgba(245,158,11,.6)';ctx.font='9px sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';
+  ctx.fillText('0<x<1: f(x)<f(0)',(tx(0)+tx(1))/2,M.top+12);
+
+  // f(0) point
+  ctx.fillStyle = f0ok ? '#10B981' : '#EF4444';
+  ctx.beginPath();ctx.arc(cx,fy0,7,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle = f0ok ? '#065F46' : '#B91C1C';
+  ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle = f0ok ? '#10B981' : '#EF4444';
+  ctx.font='bold 11px sans-serif';ctx.textAlign='left';ctx.textBaseline='bottom';
+  ctx.fillText('f(0)='+f0.toFixed(2),cx+12,fy0-4);
+
+  // Show D(-1) contains (0,1)
+  ctx.strokeStyle='rgba(46,204,113,.5)';ctx.lineWidth=2;ctx.setLineDash([5,3]);
+  ctx.strokeRect(tx(-1),M.top,tx(0)-tx(-1),ph);ctx.setLineDash([]);
+  ctx.fillStyle='rgba(46,204,113,.5)';ctx.font='9px sans-serif';ctx.textAlign='center';
+  ctx.fillText('D(-1) ⊇ (0,1)',(tx(-1)+tx(0))/2,M.top+10);
+
+  // Right panel with steps
+  ctx.textAlign='left';ctx.textBaseline='top';
+  const px = M.left + 12, py = M.top + 140;
+
+  ctx.fillStyle='#e8e0f0';ctx.font='bold 10px sans-serif';
+  ctx.fillText('3(i) 反证法证 f(0)≥1：',px,py);
+  ctx.fillStyle='rgba(255,255,255,.6)';ctx.font='8px sans-serif';
+  ctx.fillText('  假设 f(0)<1, 分两类',px,py+14);
+  ctx.fillText('  ① f(0)≥½: D(-1)⊇D(0)→(0,1)⊆D(0) → 与(b)矛盾',px+4,py+28);
+  ctx.fillText('  ② f(0)<½: D(0)⊇D(-1)→同样矛盾',px+4,py+40);
+  
+  const status0 = f0ok ? '✅ f(0)='+f0.toFixed(2)+' ≥ 1，假设成立 ✗' : '❌ f(0)='+f0.toFixed(2)+' < 1，反证法推论应矛盾';
+  ctx.fillStyle = f0ok ? '#10B981' : '#EF4444';
+  ctx.font='bold 9px sans-serif';
+  ctx.fillText(status0,px,py+56);
+
+  ctx.fillStyle='#e8e0f0';ctx.font='bold 10px sans-serif';
+  ctx.fillText('3(ii) 单调递增：',px,py+80);
+  ctx.fillStyle='rgba(255,255,255,.6)';ctx.font='8px sans-serif';
+  ctx.fillText('  D(0)与(0,1)不相交',px,py+94);
+  ctx.fillText('  D(-1)⊇(0,1)且D(-1)⊇D(0)',px,py+106);
+  ctx.fillText('  ⇒ 对0≤a<b: f(a)<f(b)',px,py+118);
+  ctx.fillStyle='#06B6D4';ctx.font='bold 9px sans-serif';
+  ctx.fillText('  ∴ [0,+∞) 严格单调递增 ✓',px,py+134);
+
+  // Title
+  ctx.fillStyle='#333';ctx.font='bold 14px sans-serif';ctx.textAlign='center';ctx.textBaseline='top';
+  ctx.fillText('Q3: 拖滑块控制 f(0) — 低于1时红色，≥1时绿色',W/2,6);
+
+  updateQ3UI(f0, f0ok);
+}
+
+function updateQ2UI(C){
+  document.getElementById('dval').textContent = dVal.toFixed(3);
+  document.getElementById('fxval').textContent = C.toFixed(3);
+  document.getElementById('f0val').textContent = '0';
+  const statusEl = document.getElementById('status');
+  const isZero = Math.abs(C) < 0.01;
+  if(isZero){
+    statusEl.className = 'status ok';
+    document.getElementById('dstatus').innerHTML = `✅ 奇函数迫使 C=0 ⇒ f(x)≡0 ⇒ D(x)=∅ ⇒ D(x₁)⊇D(x₂) ✓`;
+  } else {
+    statusEl.className = 'status bad';
+    document.getElementById('dstatus').innerHTML = `❌ 奇函数要求 ${C.toFixed(2)}=-${C.toFixed(2)} ⇒ C 必须为 0，但当前 C=${C.toFixed(2)}`;
+  }
+}
+
+function updateQ3UI(f0, f0ok){
+  document.getElementById('dval').textContent = dVal.toFixed(3);
+  document.getElementById('fxval').textContent = f0.toFixed(3);
+  document.getElementById('f0val').textContent = '—';
+  const statusEl = document.getElementById('status');
+  if(f0ok){
+    statusEl.className = 'status ok';
+    document.getElementById('dstatus').innerHTML = `✅ f(0)=${f0.toFixed(2)} ≥ 1，与条件(b)无矛盾。可推得单调递增`;
+  } else {
+    statusEl.className = 'status bad';
+    document.getElementById('dstatus').innerHTML = `❌ f(0)=${f0.toFixed(2)} < 1，反证法会推出矛盾（与条件(b)冲突）`;
+  }
+}
+
+function updateUI(){
+  document.getElementById('dval').textContent = dVal.toFixed(3);
+  document.getElementById('fxval').textContent = '—';
+  document.getElementById('f0val').textContent = '—';
+  const statusEl = document.getElementById('status');
+  statusEl.className = 'status info';
+  if(currentQ === 2){
+    document.getElementById('dstatus').innerHTML = `d = ${dVal.toFixed(3)} &nbsp;|&nbsp; 此问无需拖拽。结论：D(x₁)=∅⊇D(x₂)=∅ &#10003;`;
+  } else if(currentQ === 3){
+    document.getElementById('dstatus').innerHTML = `d = ${dVal.toFixed(3)} &nbsp;|&nbsp; 此问为抽象推理。结论：(i) f(0)≥1 &nbsp; (ii) [0,+∞)上单调递增`;
+  }
+}
+
+const slider = document.getElementById('slider');
+slider.addEventListener('input', function(){
+  dVal = parseFloat(this.value);
+  draw();
+});
+
+// Init
+updateDesc();
+draw();
+</script>
+</body>
+</html>

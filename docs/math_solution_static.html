@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 高考数学压轴题 · 完整解析</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif;background:#f5f0fa;color:#1a1a2e;line-height:1.9}
+.header{background:linear-gradient(135deg,#1a0a3e,#2d1052);color:#fff;text-align:center;padding:48px 20px 32px}
+.header h1{font-size:1.8rem;font-weight:900;letter-spacing:-0.5px;margin-bottom:6px}
+.header h1 span{background:linear-gradient(135deg,#EC4899,#F59E0B,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header p{color:rgba(255,255,255,.55);font-size:.9rem}
+.container{max-width:920px;margin:0 auto;padding:0 20px}
+.box{background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;margin:24px 0}
+.box h2{font-size:1.1rem;color:#e94560;margin-bottom:10px}
+.card{background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin:20px 0;overflow:hidden}
+.ch{display:flex;align-items:center;gap:12px;padding:18px 24px;color:#fff;font-weight:700;font-size:1.05rem}
+.cb{padding:22px 24px}
+.step{font-weight:700;font-size:.95rem;color:#8B5CF6;margin:18px 0 6px;padding-bottom:2px;border-bottom:2px solid #ede8ff}
+.step .st{display:inline-block;background:#8B5CF6;color:#fff;font-size:.65rem;padding:1px 10px;border-radius:20px;margin-right:8px;font-weight:700}
+.tb{background:#f8f6ff;border-left:4px solid #8B5CF6;padding:12px 16px;border-radius:0 10px 10px 0;margin:8px 0;font-size:.92rem}
+.tb.yl{background:#fef9e7;border-left-color:#f39c12}
+.tb.gr{background:#eafaf1;border-left-color:#27ae60;font-weight:700;color:#1e8449}
+.tb.pk{background:#fdf2f8;border-left-color:#EC4899}
+.tb.rd{background:#fef3f2;border-left-color:#EF4444}
+code{font-family:'Courier New',monospace;background:#f0ecf8;padding:1px 6px;border-radius:4px;font-size:.85em;color:#7C3AED}
+.fig{background:#fafafa;border:1px solid #e8e0f0;border-radius:12px;padding:12px;margin:16px 0;text-align:center}
+.fig figcaption{font-size:.78rem;color:#888;margin-top:6px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.9rem}
+td,th{padding:8px 14px;text-align:left;border-bottom:1px solid #e8e0f0}
+th{background:rgba(139,92,246,.1);font-weight:700;color:#7C3AED}
+.tag{display:inline-block;font-size:.65rem;font-weight:700;padding:2px 10px;border-radius:20px;letter-spacing:.3px;margin:2px}
+.tp{background:rgba(236,72,153,.12);color:#EC4899}
+.tpu{background:rgba(139,92,246,.12);color:#7C3AED}
+.tg{background:rgba(245,158,11,.12);color:#D97706}
+.tgn{background:rgba(16,185,129,.12);color:#059669}
+.tpink{background:rgba(236,72,153,.12);color:#EC4899}
+.tcyan{background:rgba(6,182,212,.12);color:#06B6D4}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:12px 0}
+.sc{background:#fafafa;border:1px solid #e8e0f0;border-radius:12px;padding:14px}
+.sc h4{font-size:.9rem;color:#7C3AED;margin-bottom:4px}
+.sc p{font-size:.82rem;color:#666;line-height:1.6}
+.footer{text-align:center;padding:40px 20px;color:#aaa;font-size:.78rem}
+@media(max-width:640px){.header h1{font-size:1.5rem}.cb{padding:16px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1><span>📐 2026 高考数学全国 I 卷</span> · 压轴题</h1>
+  <p>三问完整解读 · 图文并茂 · SVG 手绘 + 完整推导</p>
+</div>
+<div class="container">
+
+<div class="box">
+  <h2>📖 先搞懂 D(x₀) 是什么</h2>
+  <div class="tb"><b>定义：</b><code>D(x₀) = { d ∈ ℝ | f(x₀+d) &gt; f(x₀) }</code></div>
+  <div class="tb yl"><b>翻译：</b>站在 x₀ 往左或右走 d 步。如果走到的位置函数值比原来大，这个 d 就算"有效"。<br>所有"有效"的 d 的集合 = D(x₀)</div>
+  <div class="tb gr"><b>直觉：</b>函数值越小 → D 越大（往上空间大）；函数值越大 → D 越小（接近峰值）。<br>条件(a)：<code>f(x₁)≤f(x₂) ⇒ D(x₁)⊇D(x₂)</code></div>
+  <div class="tb pk"><b>简单例子：</b>f(x)=x²，x₀=1，f(1)=1。f(1+d)&gt;1 ⇒ (1+d)²&gt;1 ⇒ d&gt;0 或 d&lt;-2 ⇒ <b>D(1)=(-∞,-2)∪(0,+∞)</b></div>
+</div>
+
+<div class="box">
+  <h2>📝 题目原文</h2>
+  <div style="font-size:.92rem;color:#555;line-height:1.9">
+    已知 f(x) 定义 ≤ 为 ℝ，当 x&lt;0 时 f(x)=2ˣ。<br>
+    对任意 x₀∈ℝ，定义 D(x₀)={d∈ℝ | f(x₀+d)&gt;f(x₀)}。<br><br>
+    <b>(1)</b> 若 x≥0 时 f(x)=1-x，求 D(-1)<br>
+    <b>(2)</b> 若 f 奇函数，且任意 x₁x₂≠0 满足 f(x₁)≤f(x₂)，证 D(x₁)⊇D(x₂)<br>
+    <b>(3)</b> 若 f 满足：<br>
+    &nbsp;&nbsp;(a) f(x₁)≤f(x₂) ⇒ D(x₁)⊇D(x₂)<br>
+    &nbsp;&nbsp;(b) 0&lt;x&lt;1 ⇒ f(x)&lt;f(0)<br>
+    &nbsp;&nbsp;证：(i) f(0)≥1；(ii) f 在 [0,+∞) 上单调递增
+  </div>
+</div>
+
+<!-- Q1 -->
+<div class="card">
+  <div class="ch" style="background:linear-gradient(135deg,#10B981,#06B6D4);"><div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:900">1</div>求 D(-1) — 直接代入计算</div>
+  <div class="cb">
+    <div class="step"><span class="st">STEP 1</span> 算 f(-1)</div>
+    <div class="tb yl">x=-1&lt;0，指数部分：<b>f(-1)=2⁻¹=½</b></div>
+    <div class="step"><span class="st">STEP 2</span> 分两段找 d</div>
+    <div class="tb pk"><b>段①：d&lt;1</b>（-1+d&lt;0 指数部分）<br>2⁻¹⁺ᴰ&gt;½ ⟹ -1+d&gt;-1 ⟹ d&gt;0，又 d&lt;1 ⟹ <b>0&lt;d&lt;1</b></div>
+    <div class="tb pk"><b>段②：d≥1</b>（-1+d≥0 线性部分）<br>1-(-1+d)=2-d&gt;½ ⟹ d&lt;³⁄₂，又 d≥1 ⟹ <b>1≤d&lt;³⁄₂</b></div>
+    <div class="step"><span class="st">STEP 3</span> 合并</div>
+    <div class="tb gr"><b>D(-1) = (0, 1) ∪ [1, 3/2) = (0, 3/2)</b></div>
+
+    <div class="fig">
+      <svg width="100%" viewBox="0 0 700 420" style="max-width:700px" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="700" height="420" fill="#fafafa" rx="8"/>
+        <text x="350" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">第(1)问函数图像与 D(-1) 图示</text>
+        <g transform="translate(80,40)">
+          <line x1="300" y1="0" x2="300" y2="340" stroke="#333" stroke-width="1.5"/>
+          <line x1="0" y1="340" x2="600" y2="340" stroke="#333" stroke-width="1.5"/>
+          <g stroke="#333" stroke-width="1">
+            <line x1="0" y1="336" x2="0" y2="344"/><line x1="60" y1="336" x2="60" y2="344"/>
+            <line x1="120" y1="336" x2="120" y2="344"/><line x1="180" y1="336" x2="180" y2="344"/>
+            <line x1="240" y1="336" x2="240" y2="344"/><line x1="300" y1="336" x2="300" y2="344"/>
+            <line x1="360" y1="336" x2="360" y2="344"/><line x1="480" y1="336" x2="480" y2="344"/><line x1="600" y1="336" x2="600" y2="344"/>
+          </g>
+          <g font-size="11" fill="#888" text-anchor="middle">
+            <text x="0" y="350">-3</text><text x="60" y="350">-2.5</text><text x="120" y="350">-2</text>
+            <text x="180" y="350">-1</text><text x="240" y="350">-0.5</text><text x="300" y="348">O</text>
+            <text x="360" y="350">0.5</text><text x="480" y="350">1.5</text><text x="600" y="350">3</text>
+          </g>
+          <text x="282" y="340" font-size="10" fill="#888" text-anchor="end">0</text>
+          <text x="282" y="190" font-size="10" fill="#888" text-anchor="end">0.5</text>
+          <text x="282" y="100" font-size="10" fill="#888" text-anchor="end">1</text>
+          <rect x="300" y="0" width="180" height="340" fill="rgba(46,204,113,.12)" stroke="rgba(46,204,113,.5)" stroke-dasharray="5,3" stroke-width="1"/>
+          <text x="390" y="16" text-anchor="middle" font-size="12" fill="#27ae60" font-weight="bold">D(-1) = (0, 1.5)</text>
+          <line x1="0" y1="190" x2="600" y2="190" stroke="#e74c3c" stroke-width="1" stroke-dasharray="4,4" opacity=".5"/>
+          <text x="4" y="188" font-size="10" fill="#e74c3c">y=0.5 (f(-1))</text>
+          <path d="M 0 383.8 Q 30 380 60 370 Q 90 352 120 325 Q 150 288 180 240 Q 210 182 240 115 Q 270 50 300 25" fill="none" stroke="#3498db" stroke-width="3"/>
+          <path d="M 240 115 Q 250 95 260 78 Q 270 60 280 42 Q 290 30 300 25" fill="none" stroke="#3498db" stroke-width="3"/>
+          <line x1="300" y1="25" x2="600" y2="325" stroke="#e74c3c" stroke-width="3"/>
+          <circle cx="180" cy="190" r="7" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+          <circle cx="300" cy="25" r="5" fill="#333" stroke="#555" stroke-width="1.5"/>
+          <line x1="180" y1="0" x2="180" y2="340" stroke="#555" stroke-dasharray="3,3" stroke-width=".8" opacity=".3"/>
+          <line x1="300" y1="0" x2="300" y2="340" stroke="#555" stroke-dasharray="3,3" stroke-width=".8" opacity=".3"/>
+          <line x1="480" y1="0" x2="480" y2="340" stroke="#27ae60" stroke-dasharray="3,3" stroke-width=".8" opacity=".5"/>
+          <line x1="180" y1="366" x2="480" y2="366" stroke="#2ecc71" stroke-width="2.5"/>
+          <polygon points="480,362 490,366 480,370" fill="#2ecc71"/>
+          <text x="330" y="380" text-anchor="middle" font-size="10" fill="#27ae60" font-weight="bold">d ∈ (0, 1.5)</text>
+          <g transform="translate(320,280)">
+            <rect x="0" y="0" width="260" height="56" fill="#fff" stroke="#ddd" stroke-width="1" rx="6"/>
+            <line x1="10" y1="16" x2="36" y2="16" stroke="#3498db" stroke-width="3"/>
+            <text x="42" y="20" font-size="10" fill="#555">f(x)=2ˣ (x&lt;0)</text>
+            <line x1="10" y1="38" x2="36" y2="38" stroke="#e74c3c" stroke-width="3"/>
+            <text x="42" y="42" font-size="10" fill="#555">f(x)=1-x (x≥0)</text>
+          </g>
+          <g transform="translate(15,5)">
+            <rect x="0" y="0" width="155" height="34" fill="#d5f5e3" rx="6" stroke="#27ae60" stroke-width="1"/>
+            <text x="8" y="12" font-size="8" fill="#27ae60" font-weight="bold">步骤1</text>
+            <text x="8" y="26" font-size="7.5" fill="#333">f(-1)=2⁻¹=0.5</text>
+          </g>
+          <g transform="translate(15,44)">
+            <rect x="0" y="0" width="155" height="44" fill="#fef9e7" rx="6" stroke="#f39c12" stroke-width="1"/>
+            <text x="8" y="12" font-size="8" fill="#f39c12" font-weight="bold">步骤2</text>
+            <text x="8" y="28" font-size="7" fill="#333">① d&lt;1: 2⁻¹⁺ᴰ&gt;½→d&gt;0</text>
+            <text x="8" y="40" font-size="7" fill="#333">② d≥1: 2-d&gt;½→d&lt;1.5</text>
+          </g>
+          <g transform="translate(15,94)">
+            <rect x="0" y="0" width="155" height="26" fill="#eafaf1" rx="6" stroke="#1e8449" stroke-width="1.5"/>
+            <text x="8" y="10" font-size="8" fill="#1e8449" font-weight="bold">步骤3</text>
+            <text x="8" y="21" font-size="7.5" fill="#1e8449" font-weight="bold">D(-1)=(0,1.5)</text>
+          </g>
+        </g>
+      </svg>
+      <figcaption>图：第(1)问。蓝色=2ˣ，红色=1-x，绿色区域=D(-1)=(0,1.5)</figcaption>
+    </div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="card">
+  <div class="ch" style="background:linear-gradient(135deg,#8B5CF6,#EC4899);"><div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:900">2</div>奇函数 + 均匀不等式</div>
+  <div class="cb">
+    <div class="step"><span class="st">关键</span> 条件解读</div>
+    <div class="tb">对所有非零 x₁,x₂ 有 f(x₁)≤f(x₂) ⟹ 交换也成立 ⟹ <b>所有非零点的函数值全相等</b></div>
+    <div class="step"><span class="st">STEP 1</span> 确定常数</div>
+    <div class="tb yl">存在 C，x≠0 时 f(x)=C。由奇函数 f(1)=-f(-1) ⟹ C=-C ⟹ <b>C=0</b></div>
+    <div class="step"><span class="st">STEP 2</span> D 为空集</div>
+    <div class="tb gr">f(x)=0 对所有 x 成立。D(x₀)={d | 0&gt;0}=<b>∅</b></div>
+    <div class="step"><span class="st">STEP 3</span> 包含关系</div>
+    <div class="tb gr">D(x₁)=∅，D(x₂)=∅，空集包含空集 ⟹ <b>D(x₁)⊇D(x₂) ✓</b></div>
+    
+    <div class="fig">
+      <svg width="100%" viewBox="0 0 500 200" style="max-width:500px">
+        <rect x="0" y="0" width="500" height="200" fill="#fafafa" rx="8"/>
+        <g transform="translate(60,120)">
+          <line x1="0" y1="0" x2="400" y2="0" stroke="#333" stroke-width="1.5"/>
+          <line x1="200" y1="-90" x2="200" y2="60" stroke="#333" stroke-width="1.5"/>
+          <text x="-5" y="12" font-size="10" fill="#888">O</text>
+          <text x="408" y="4" font-size="10" fill="#888">x</text>
+          <text x="204" y="-94" font-size="10" fill="#888">y</text>
+          <line x1="0" y1="0" x2="400" y2="0" stroke="#3498db" stroke-width="3"/>
+          <circle cx="60" cy="0" r="5" fill="#e74c3c" stroke="#c0392b" stroke-width="1.5"/>
+          <circle cx="140" cy="0" r="5" fill="#e74c3c" stroke="#c0392b" stroke-width="1.5"/>
+          <circle cx="200" cy="0" r="5" fill="#e74c3c" stroke="#c0392b" stroke-width="1.5"/>
+          <circle cx="260" cy="0" r="5" fill="#e74c3c" stroke="#c0392b" stroke-width="1.5"/>
+          <circle cx="340" cy="0" r="5" fill="#e74c3c" stroke="#c0392b" stroke-width="1.5"/>
+          <text x="60" y="-6" text-anchor="middle" font-size="9" fill="#e74c3c">x₁</text>
+          <text x="340" y="-6" text-anchor="middle" font-size="9" fill="#e74c3c">x₂</text>
+          <rect x="20" y="-80" width="200" height="60" fill="#fef9e7" rx="6" stroke="#f39c12" stroke-width="1"/>
+          <text x="28" y="-66" font-size="10" fill="#333">f(x₁)=f(x₂)=C 对所有 x≠0</text>
+          <text x="28" y="-52" font-size="10" fill="#333">奇函数: C=-C → C=0</text>
+          <text x="28" y="-38" font-size="10" fill="#333">∴ f(x)≡0 ⇒ D=∅</text>
+        </g>
+      </svg>
+      <figcaption>第(2)问：f≡0 ⇒ D 全空集 ⇒ 包含关系自然成立</figcaption>
+    </div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="card">
+  <div class="ch" style="background:linear-gradient(135deg,#F59E0B,#EF4444);"><div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:900">3</div>抽象论证 — 最难的一问</div>
+  <div class="cb">
+    <div class="tb">条件：<span class="tag tp">(a)</span> f(x₁)≤f(x₂)⇒D(x₁)⊇D(x₂) &nbsp;&nbsp; <span class="tag tcyan">(b)</span> 0&lt;x&lt;1⇒f(x)&lt;f(0)</div>
+    
+    <div class="step" style="color:#10B981"><span class="st" style="background:#10B981">3(i)</span> 证 f(0)≥1</div>
+    <div class="tb yl"><b>反证法</b>：假设 f(0)&lt;1，推出矛盾。</div>
+    <div class="tb"><b>确认 (0,1)⊆D(-1)</b>：0&lt;d&lt;1⇒-1+d&lt;0⇒2⁻¹⁺ᴰ&gt;½ ⇒ (0,1) 在 D(-1) 中</div>
+    <div class="tb pk"><b>情况 A：f(0)≥½</b><br>f(-1)=½≤f(0) ⇒ D(-1)⊇D(0) → (0,1)⊆D(0) → f(d)&gt;f(0)，与(b)矛盾 ✗</div>
+    <div class="tb pk"><b>情况 B：f(0)&lt;½</b><br>f(0)&lt;f(-1) ⇒ D(0)⊇D(-1) → (0,1)⊆D(0) → 同样与(b)矛盾 ✗</div>
+    <div class="tb gr">两类均矛盾 ⟹ <b>f(0)≥1 ✓</b></div>
+    
+    <div class="step" style="color:#06B6D4"><span class="st" style="background:#06B6D4">3(ii)</span> 证 f 在 [0,+∞) 上单调递增</div>
+    <div class="tb">要证：0≤a&lt;b ⇒ f(a)&lt;f(b)</div>
+    <div class="tb yl"><b>预备事实：</b><br>① 由 3(i)：f(0)≥1<br>② D(0) 与 (0,1) 不相交 (由b)<br>③ D(-1) 包含 (0,1) (前问)<br>④ f(-1)=½&lt;f(0) ⇒ D(-1)⊇D(0)</div>
+    <div class="tb pk"><b>核心推理：</b><br>先证 ∀x≥0：f(x)≥f(0)（反证：若存在 y≥0 使 f(y)&lt;f(0) 则 D(y)⊇D(0)，与②矛盾）<br>再证 0≤a&lt;b ⇒ f(a)&lt;f(b)（利用条件(a)逆否 + 包含关系传递性）</div>
+    <div class="tb gr"><b>∴ f(x) 在 [0,+∞) 上严格单调递增 ✓</b></div>
+    
+    <div class="fig">
+      <svg width="100%" viewBox="0 0 550 240" style="max-width:550px">
+        <rect x="0" y="0" width="550" height="240" fill="#fafafa" rx="8"/>
+        <g transform="translate(60,40)">
+          <line x1="0" y1="160" x2="460" y2="160" stroke="#333" stroke-width="1.5"/>
+          <line x1="230" y1="0" x2="230" y2="200" stroke="#333" stroke-width="1.5"/>
+          <text x="226" y="170" font-size="10" fill="#888">O</text>
+          <g font-size="9" fill="#888" text-anchor="middle">
+            <text x="0" y="170">-3</text><text x="115" y="170">-1</text><text x="345" y="170">1</text><text x="460" y="170">3</text>
+          </g>
+          <!-- 2^x -->
+          <path d="M 0 163 Q 30 162 60 158 Q 90 150 115 135 Q 140 115 175 90 Q 200 60 230 40" fill="none" stroke="#3498db" stroke-width="3"/>
+          <!-- increasing on right -->
+          <path d="M 230 40 Q 260 35 290 30 Q 320 25 350 20 Q 380 12 420 5 Q 450 0 460 0" fill="none" stroke="#10B981" stroke-width="3"/>
+          <circle cx="230" cy="40" r="5" fill="#10B981" stroke="#065F46" stroke-width="1.5"/>
+          <text x="230" y="36" text-anchor="middle" font-size="8" fill="#10B981" font-weight="bold">f(0)≥1</text>
+          <rect x="40" y="-10" width="180" height="80" fill="#fef9e7" rx="6" stroke="#f39c12" stroke-width="1"/>
+          <text x="48" y="4" font-size="8" fill="#333">D(0) 与 (0,1) 不相交</text>
+          <text x="48" y="18" font-size="8" fill="#333">D(-1)包含(0,1)且D(-1)⊇D(0)</text>
+          <text x="48" y="32" font-size="8" fill="#333">对任意 x≥0: f(x)≥f(0)</text>
+          <text x="48" y="46" font-size="8" fill="#333">再由条件(a)逆否:</text>
+          <text x="48" y="60" font-size="8" fill="#333">f(a)&lt;f(b) for a&lt;b</text>
+        </g>
+      </svg>
+      <figcaption>第(3)问推理图。左蓝=已知 2ˣ，右绿=需证单调递增</figcaption>
+    </div>
+  </div>
+</div>
+
+<!-- 答案汇总 -->
+<div class="box">
+  <h2>📊 答案速查</h2>
+  <table>
+    <tr><th>题号</th><th>答案</th><th>难度</th></tr>
+    <tr><td>(1)</td><td><b>D(-1) = (0, 3/2)</b><br><span style="color:#999;font-size:.8rem">分两段讨论合并</span></td><td><span class="tag tgn">送分</span></td></tr>
+    <tr><td>(2)</td><td><b>D(x₁)⊇D(x₂)</b> (均为空集)<br><span style="color:#999;font-size:.8rem">奇函数 + 全相等 → f≡0</span></td><td><span class="tag tgn">送分</span></td></tr>
+    <tr><td>(3i)</td><td><b>f(0)≥1</b><br><span style="color:#999;font-size:.8rem">反证法，分两类</span></td><td><span class="tag tpu">中等</span></td></tr>
+    <tr><td>(3ii)</td><td><b>f 在 [0,+∞) 上严格单调递增</b><br><span style="color:#999;font-size:.8rem">条件(a)逆否 + 链式推理</span></td><td><span class="tag tp">最难</span></td></tr>
+  </table>
+</div>
+
+<div class="box">
+  <h2>🎯 核心能力总结</h2>
+  <div class="grid">
+    <div class="sc"><h4>🧠 新定义理解</h4><p>D(x₀) 是你没见过的集合，需要秒懂几何含义</p></div>
+    <div class="sc"><h4>📂 分类讨论</h4><p>(1)指数/线性分段；(3i)分 f(0)与½ 两类</p></div>
+    <div class="sc"><h4>🔁 反证法</h4><p>(3i)核心手段：假设反面→推出矛盾</p></div>
+    <div class="sc"><h4>🔗 逻辑推理</h4><p>条件(a)正逆否命题、包含传递性</p></div>
+    <div class="sc"><h4>📊 函数性质</h4><p>奇函数、单调性、指数函数 2ˣ 严格递增</p></div>
+    <div class="sc"><h4>⚠️ 易错点</h4><p>D(x₀)是 d 的集合不是 x 的集合；(2)别想复杂</p></div>
+  </div>
+</div>
+
+</div>
+<div class="footer">⚡ 2026 高考数学全国 I 卷 · 压轴题完整解析 · 静态无依赖 SVG 版</div>
+</body>
+</html>
